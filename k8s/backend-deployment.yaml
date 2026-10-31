@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ewaste-backend
+  namespace: ewaste-system
+  labels:
+    app: ewaste-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ewaste-backend
+  template:
+    metadata:
+      labels:
+        app: ewaste-backend
+    spec:
+      containers:
+        - name: backend
+          image: ewaste-backend:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-atlas-secret
+                  key: MONGODB_URI
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
+          readinessProbe:
+            httpGet:
+              path: /api/admin/dashboard-stats
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /api/admin/dashboard-stats
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ewaste-backend-service
+  namespace: ewaste-system
+spec:
+  selector:
+    app: ewaste-backend
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP

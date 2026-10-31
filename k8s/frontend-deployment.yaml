@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ewaste-frontend
+  namespace: ewaste-system
+  labels:
+    app: ewaste-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ewaste-frontend
+  template:
+    metadata:
+      labels:
+        app: ewaste-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: ewaste-frontend:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "250m"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ewaste-frontend-service
+  namespace: ewaste-system
+spec:
+  selector:
+    app: ewaste-frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
