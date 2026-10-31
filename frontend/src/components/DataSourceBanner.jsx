@@ -36,7 +36,7 @@ export default function DataSourceBanner({ onNotification }) {
       } else {
         onNotification?.(
           'error',
-          'Spring Boot backend not reachable on port 8080. Start backend using `mvn spring-boot:run` to switch to MongoDB Atlas.'
+          'Spring Boot backend not reachable on port 8081. Start backend using `mvn spring-boot:run` to switch to MongoDB Atlas.'
         );
       }
     } else {
@@ -96,7 +96,7 @@ export default function DataSourceBanner({ onNotification }) {
         <button
           onClick={checkStatus}
           disabled={isChecking}
-          title="Ping Spring Boot backend (http://localhost:8080)"
+          title="Ping Spring Boot backend (http://localhost:8081)"
           style={{
             background: 'transparent',
             border: 'none',
@@ -111,11 +111,11 @@ export default function DataSourceBanner({ onNotification }) {
           <RefreshCw size={12} className={isChecking ? 'spin-anim' : ''} />
           {backendOnline === true ? (
             <span style={{ color: '#34d399', display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <CheckCircle2 size={12} /> Backend Port 8080 Online
+              <CheckCircle2 size={12} /> Backend Port 8081 Online
             </span>
           ) : backendOnline === false ? (
             <span style={{ color: '#fb7185', display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <AlertTriangle size={12} /> Backend Port 8080 Offline
+              <AlertTriangle size={12} /> Backend Port 8081 Offline
             </span>
           ) : (
             'Check Backend'

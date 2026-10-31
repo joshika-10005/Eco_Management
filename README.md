@@ -96,11 +96,11 @@ Per requirements, the React frontend is initially fully functional out-of-the-bo
    cd backend
    mvn clean spring-boot:run
    ```
-   *The backend starts at `http://localhost:8080/`. On first startup, `DataInitializer` seeds test accounts and requests directly into MongoDB Atlas.*
+   *The backend starts at `http://localhost:8081/`. On first startup, `DataInitializer` seeds test accounts and requests directly into MongoDB Atlas.*
 
 3. **Switch Frontend Data Source:**
    * In the top bar of the frontend, click **"Switch to Spring Boot API"**.
-   * The app will ping `http://localhost:8080/api/admin/dashboard-stats` and automatically route all requests to Spring Data MongoDB!
+   * The app will ping `http://localhost:8081/api/admin/dashboard-stats` and automatically route all requests to Spring Data MongoDB!
 
 ---
 
@@ -116,7 +116,7 @@ docker compose up --build
 ```
 
 * **Frontend:** `http://localhost:3000`
-* **Backend REST API:** `http://localhost:8080/api/`
+* **Backend REST API:** `http://localhost:8081/api/`
 * **Local MongoDB (fallback):** `localhost:27017`
 
 ---

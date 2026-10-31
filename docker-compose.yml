@@ -9,11 +9,11 @@ services:
     container_name: ewaste-backend
     restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "8081:8081"
     environment:
       # Inject Atlas Cloud connection string or fall back to docker network mongodb
       - MONGODB_URI=${MONGODB_URI:-mongodb://mongodb:27017/ewaste_db}
-      - SERVER_PORT=8080
+      - SERVER_PORT=8081
     depends_on:
       - mongodb
     networks:

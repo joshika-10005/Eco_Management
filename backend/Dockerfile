@@ -25,8 +25,8 @@ COPY --from=build /app/target/ewaste-backend-1.0.0.jar app.jar
 
 # MongoDB Atlas URI injected via environment variable
 ENV MONGODB_URI=""
-ENV PORT=8080
+ENV PORT=8081
 
-EXPOSE 8080
+EXPOSE 8081
 
 ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "app.jar"]
