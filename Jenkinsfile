@@ -2,96 +2,112 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_REGISTRY = 'docker.io/myorg'
-        BACKEND_IMAGE   = 'ewaste-backend'
-        FRONTEND_IMAGE  = 'ewaste-frontend'
-        IMAGE_TAG       = "${BUILD_NUMBER}"
-        KUBECONFIG_ID   = 'k8s-kubeconfig'
+        BACKEND_DIR  = 'backend'
+        FRONTEND_DIR = 'frontend'
+        IMAGE_NAME   = 'ewaste-backend'
+        IMAGE_TAG    = "${BUILD_NUMBER}"
     }
 
     tools {
         maven 'Maven-3.9.16'
         jdk   'JDK-21'
-        nodejs 'NodeJS-20'
     }
 
     stages {
-        stage('Checkout SCM') {
+        // Stage 1: Checkout - Retrieve latest source code from GitHub repository
+        stage('Checkout') {
             steps {
-                echo 'Checking out source repository...'
+                echo '=== Stage 1: Checking out source code from GitHub ==='
                 checkout scm
             }
         }
 
-        stage('Backend Build & Test') {
+        // Stage 2: Build - Compile the Spring Boot backend using Maven
+        stage('Build') {
             steps {
-                echo 'Compiling Spring Boot backend and executing tests with Maven...'
-                dir('backend') {
-                    sh 'mvn clean package'
+                echo '=== Stage 2: Compiling Spring Boot Backend ==='
+                dir("${env.BACKEND_DIR}") {
+                    script {
+                        if (isUnix()) {
+                            sh 'mvn clean compile'
+                        } else {
+                            bat 'mvn clean compile'
+                        }
+                    }
+                }
+            }
+        }
+
+        // Stage 3: Test - Execute unit and integration tests with Maven
+        stage('Test') {
+            steps {
+                echo '=== Stage 3: Running Automated Maven Tests ==='
+                dir("${env.BACKEND_DIR}") {
+                    script {
+                        if (isUnix()) {
+                            sh 'mvn test'
+                        } else {
+                            bat 'mvn test'
+                        }
+                    }
                 }
             }
             post {
                 always {
-                    junit 'backend/target/surefire-reports/*.xml'
+                    // Archive test results for test trend reporting in Jenkins
+                    junit allowEmptyResults: true, testResults: "${env.BACKEND_DIR}/target/surefire-reports/*.xml"
                 }
             }
         }
 
-        stage('Frontend Build & Bundle') {
+        // Stage 4: Package - Generate the executable Spring Boot JAR file
+        stage('Package') {
             steps {
-                echo 'Installing Vite frontend dependencies and building production assets...'
-                dir('frontend') {
-                    sh 'npm ci'
-                    sh 'npm run build'
+                echo '=== Stage 4: Packaging Spring Boot Executable JAR ==='
+                dir("${env.BACKEND_DIR}") {
+                    script {
+                        if (isUnix()) {
+                            sh 'mvn package -DskipTests'
+                        } else {
+                            bat 'mvn package -DskipTests'
+                        }
+                    }
+                }
+            }
+            post {
+                success {
+                    // Archive the generated JAR artifact in Jenkins
+                    archiveArtifacts allowEmptyArchive: true, artifacts: "${env.BACKEND_DIR}/target/*.jar", fingerprint: true
                 }
             }
         }
 
-        stage('Docker Build Images') {
+        // Stage 5: Docker Build - Build the backend Docker container image
+        stage('Docker Build') {
             steps {
-                echo 'Building container images for Spring Boot & Vite Frontend...'
+                echo '=== Stage 5: Building Backend Docker Image ==='
                 script {
-                    sh "docker build -t ${DOCKER_REGISTRY}/${BACKEND_IMAGE}:${IMAGE_TAG} -t ${DOCKER_REGISTRY}/${BACKEND_IMAGE}:latest ./backend"
-                    sh "docker build -t ${DOCKER_REGISTRY}/${FRONTEND_IMAGE}:${IMAGE_TAG} -t ${DOCKER_REGISTRY}/${FRONTEND_IMAGE}:latest ./frontend"
+                    def dockerCmd = "docker build -t ${env.IMAGE_NAME}:${env.IMAGE_TAG} -t ${env.IMAGE_NAME}:latest ./${env.BACKEND_DIR}"
+                    if (isUnix()) {
+                        sh dockerCmd
+                    } else {
+                        bat dockerCmd
+                    }
                 }
-            }
-        }
-
-        stage('Docker Image Push') {
-            steps {
-                echo 'Pushing Docker images to registry...'
-                // withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                //     sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
-                //     sh "docker push ${DOCKER_REGISTRY}/${BACKEND_IMAGE}:${IMAGE_TAG}"
-                //     sh "docker push ${DOCKER_REGISTRY}/${FRONTEND_IMAGE}:${IMAGE_TAG}"
-                // }
-                echo 'Simulated image push with tag ${IMAGE_TAG}'
-            }
-        }
-
-        stage('Deploy to Kubernetes') {
-            steps {
-                echo 'Applying Kubernetes manifests to ewaste-system namespace...'
-                // withKubeConfig([credentialsId: "${KUBECONFIG_ID}"]) {
-                //     sh 'kubectl apply -f k8s/namespace.yaml'
-                //     sh 'kubectl apply -f k8s/mongodb-secret.yaml'
-                //     sh 'kubectl apply -f k8s/backend-deployment.yaml'
-                //     sh 'kubectl apply -f k8s/frontend-deployment.yaml'
-                //     sh 'kubectl apply -f k8s/ingress.yaml'
-                //     sh "kubectl set image deployment/ewaste-backend backend=${DOCKER_REGISTRY}/${BACKEND_IMAGE}:${IMAGE_TAG} -n ewaste-system"
-                //     sh "kubectl set image deployment/ewaste-frontend frontend=${DOCKER_REGISTRY}/${FRONTEND_IMAGE}:${IMAGE_TAG} -n ewaste-system"
-                // }
-                echo 'Kubernetes manifests validated successfully.'
             }
         }
     }
 
     post {
         success {
-            echo 'Pipeline completed successfully! All artifacts verified.'
+            echo '==================================================='
+            echo '  CI Pipeline Succeeded! Artifacts & Docker Ready  '
+            echo '==================================================='
         }
         failure {
-            echo 'CI/CD pipeline failed. Inspect stage logs for debugging.'
+            echo '==================================================='
+            echo '  Pipeline Failed! Please inspect stage build logs '
+            echo '==================================================='
         }
     }
 }

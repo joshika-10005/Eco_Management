@@ -116,7 +116,7 @@ export default function PickupManager({ onNotification }) {
   const eligibleForPickup = requests.filter(r => r.status === 'PENDING' || r.status === 'APPROVED');
 
   return (
-    <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '32px 24px 64px' }}>
+    <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '36px 24px 64px' }}>
       {/* Header */}
       <div style={{
         display: 'flex',
@@ -127,8 +127,8 @@ export default function PickupManager({ onNotification }) {
         marginBottom: '28px'
       }}>
         <div>
-          <h1 style={{ fontSize: '2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <Truck color="var(--primary-light)" size={28} />
+          <h1 style={{ fontSize: '2rem', display: 'flex', alignItems: 'center', gap: '10px', color: '#132a20' }}>
+            <Truck color="#059669" size={28} />
             <span>Fleet &amp; Doorstep Logistics</span>
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: 0 }}>
@@ -152,9 +152,9 @@ export default function PickupManager({ onNotification }) {
           Loading dispatch records...
         </div>
       ) : pickups.length === 0 ? (
-        <div className="glass-panel" style={{ textAlign: 'center', padding: '60px 20px' }}>
+        <div className="glass-panel" style={{ textAlign: 'center', padding: '60px 20px', background: '#ffffff' }}>
           <Truck size={40} color="var(--text-dim)" style={{ marginBottom: '12px' }} />
-          <h3 style={{ fontSize: '1.2rem', marginBottom: '6px' }}>No active dispatches scheduled</h3>
+          <h3 style={{ fontSize: '1.2rem', marginBottom: '6px', color: '#132a20' }}>No active dispatches scheduled</h3>
           <p style={{ color: 'var(--text-dim)', fontSize: '0.9rem' }}>
             Click &quot;Schedule New Dispatch&quot; to assign a vehicle and time slot to an approved collection request.
           </p>
@@ -175,7 +175,8 @@ export default function PickupManager({ onNotification }) {
                 className="glass-panel"
                 style={{
                   padding: '24px',
-                  border: isCompleted ? '1px solid rgba(16, 185, 129, 0.25)' : '1px solid rgba(139, 92, 246, 0.3)',
+                  background: '#ffffff',
+                  border: isCompleted ? '1px solid #a7f3d0' : '1px solid var(--border-subtle)',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between'
@@ -184,10 +185,10 @@ export default function PickupManager({ onNotification }) {
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px' }}>
                     <div>
-                      <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--primary-light)' }}>
+                      <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#047857' }}>
                         DISPATCH #{pick.id}
                       </span>
-                      <h3 style={{ fontSize: '1.15rem', color: '#fff', margin: '2px 0 0' }}>
+                      <h3 style={{ fontSize: '1.15rem', color: '#132a20', margin: '2px 0 0' }}>
                         Ref: {pick.requestId}
                       </h3>
                       {req && (
@@ -206,28 +207,29 @@ export default function PickupManager({ onNotification }) {
                   {/* Route & Schedule details */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '20px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <Calendar size={15} color="var(--primary-light)" />
+                      <Calendar size={15} color="#059669" />
                       <span>{pick.scheduledDate} • {pick.timeSlot}</span>
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <MapPin size={15} color="#38bdf8" />
+                      <MapPin size={15} color="#0284c7" />
                       <span>{pick.pickupAddress}</span>
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <User size={15} color="#c084fc" />
+                      <User size={15} color="#7c3aed" />
                       <span>Donor: <strong>{pick.userName}</strong> ({pick.userPhone})</span>
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <Truck size={15} color="#fbbf24" />
+                      <Truck size={15} color="#d97706" />
                       <span>Vehicle: <strong>{pick.vehicleNumber}</strong> • Driver: {pick.agentName}</span>
                     </div>
 
                     {pick.instructions && (
                       <div style={{
-                        background: 'rgba(255, 255, 255, 0.04)',
+                        background: '#f8faf9',
+                        border: '1px solid var(--border-subtle)',
                         padding: '8px 12px',
                         borderRadius: 'var(--radius-sm)',
                         fontSize: '0.78rem',
@@ -248,7 +250,7 @@ export default function PickupManager({ onNotification }) {
                   justifyContent: 'space-between',
                   gap: '12px'
                 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.82rem', color: '#34d399' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.82rem', color: '#047857', background: '#ecfdf5', padding: '4px 10px', borderRadius: '8px' }}>
                     <KeyRound size={14} />
                     <span>Handoff OTP: <strong>{pick.confirmationOtp}</strong></span>
                   </div>
@@ -266,7 +268,7 @@ export default function PickupManager({ onNotification }) {
                       <span>Verify &amp; Collect</span>
                     </button>
                   ) : (
-                    <span style={{ color: 'var(--primary-light)', fontSize: '0.78rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <span style={{ color: '#059669', fontSize: '0.78rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
                       <CheckCircle2 size={14} /> Collected &amp; Verified
                     </span>
                   )}
@@ -281,8 +283,8 @@ export default function PickupManager({ onNotification }) {
       {showScheduleModal && (
         <div className="modal-backdrop" onClick={() => setShowScheduleModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h2 style={{ fontSize: '1.4rem', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Truck size={22} color="var(--primary-light)" />
+            <h2 style={{ fontSize: '1.4rem', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px', color: '#132a20' }}>
+              <Truck size={22} color="#059669" />
               <span>Schedule Logistics Pickup</span>
             </h2>
 
@@ -394,8 +396,8 @@ export default function PickupManager({ onNotification }) {
               width: '50px',
               height: '50px',
               borderRadius: '50%',
-              background: 'rgba(16, 185, 129, 0.15)',
-              color: '#34d399',
+              background: '#d1fae5',
+              color: '#047857',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -404,7 +406,7 @@ export default function PickupManager({ onNotification }) {
               <KeyRound size={26} />
             </div>
 
-            <h2 style={{ fontSize: '1.3rem', marginBottom: '8px' }}>Doorstep OTP Verification</h2>
+            <h2 style={{ fontSize: '1.3rem', marginBottom: '8px', color: '#132a20' }}>Doorstep OTP Verification</h2>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '20px' }}>
               Ask citizen <strong>{verifyingPickup.userName}</strong> for the 4-digit code displayed on their tracker.
             </p>
@@ -424,7 +426,8 @@ export default function PickupManager({ onNotification }) {
                   textAlign: 'center',
                   fontWeight: 800,
                   marginBottom: '20px',
-                  color: 'var(--primary-light)'
+                  color: '#047857',
+                  border: '2px solid #10b981'
                 }}
               />
 

@@ -30,7 +30,6 @@ export default function SubmitRequestModal({ isOpen, onClose, currentUser, onReq
 
   if (!isOpen) return null;
 
-  // Estimated points
   const estReward = Math.round(50 + (weightKg * 20) + ((quantity - 1) * 25));
 
   const handleSubmit = async (e) => {
@@ -85,19 +84,19 @@ export default function SubmitRequestModal({ isOpen, onClose, currentUser, onReq
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div style={{
-              width: '36px',
-              height: '36px',
-              borderRadius: '10px',
-              background: 'rgba(16, 185, 129, 0.15)',
+              width: '38px',
+              height: '38px',
+              borderRadius: '12px',
+              background: '#d1fae5',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              color: 'var(--primary-light)'
+              color: '#047857'
             }}>
               <Leaf size={20} />
             </div>
             <div>
-              <h2 style={{ fontSize: '1.4rem', margin: 0 }}>Submit E-Waste for Recycling</h2>
+              <h2 style={{ fontSize: '1.4rem', margin: 0, color: '#132a20' }}>Submit E-Waste for Recycling</h2>
               <p style={{ fontSize: '0.8rem', color: 'var(--text-dim)', margin: 0 }}>
                 Doorstep collection with verifiable material chain of custody
               </p>
@@ -107,7 +106,7 @@ export default function SubmitRequestModal({ isOpen, onClose, currentUser, onReq
           <button 
             onClick={onClose}
             style={{
-              background: 'rgba(255, 255, 255, 0.05)',
+              background: '#f1f5f3',
               border: 'none',
               color: 'var(--text-muted)',
               cursor: 'pointer',
@@ -200,8 +199,8 @@ export default function SubmitRequestModal({ isOpen, onClose, currentUser, onReq
                 value={hazardLevel}
                 onChange={(e) => setHazardLevel(e.target.value)}
               >
-                <option value="Low">Low (Plastics & Cables)</option>
-                <option value="Medium">Medium (PCBs & Monitors)</option>
+                <option value="Low">Low (Plastics &amp; Cables)</option>
+                <option value="Medium">Medium (PCBs &amp; Monitors)</option>
                 <option value="High (Toxic/Battery)">High (Toxic/Battery/Lead)</option>
               </select>
             </div>
@@ -246,24 +245,24 @@ export default function SubmitRequestModal({ isOpen, onClose, currentUser, onReq
 
           {/* Estimated reward badge */}
           <div style={{
-            background: 'rgba(16, 185, 129, 0.12)',
-            border: '1px solid rgba(16, 185, 129, 0.3)',
+            background: '#ecfdf5',
+            border: '1px solid #a7f3d0',
             borderRadius: 'var(--radius-md)',
-            padding: '12px 16px',
+            padding: '14px 18px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Sparkles color="var(--primary-light)" size={18} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <Sparkles color="#059669" size={18} />
               <div>
-                <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#fff' }}>Calculated Reward Credit</span>
+                <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#132a20' }}>Calculated Reward Credit</span>
                 <p style={{ fontSize: '0.75rem', color: 'var(--text-dim)', margin: 0 }}>
                   Credited upon verified recycling completion
                 </p>
               </div>
             </div>
-            <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--primary-light)' }}>
+            <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#047857' }}>
               +{estReward} EcoPoints
             </div>
           </div>

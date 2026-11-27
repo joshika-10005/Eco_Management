@@ -89,7 +89,7 @@ export default function RequestTracker({ currentUser, onOpenScheduleModal, onNot
   });
 
   return (
-    <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '32px 24px 64px' }}>
+    <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '36px 24px 64px' }}>
       {/* Header */}
       <div style={{
         display: 'flex',
@@ -100,8 +100,8 @@ export default function RequestTracker({ currentUser, onOpenScheduleModal, onNot
         marginBottom: '28px'
       }}>
         <div>
-          <h1 style={{ fontSize: '2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <ListOrdered color="var(--primary-light)" size={28} />
+          <h1 style={{ fontSize: '2rem', display: 'flex', alignItems: 'center', gap: '10px', color: '#132a20' }}>
+            <ListOrdered color="#059669" size={28} />
             <span>Recycling Request Tracker</span>
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: 0 }}>
@@ -137,20 +137,21 @@ export default function RequestTracker({ currentUser, onOpenScheduleModal, onNot
             key={s}
             onClick={() => setFilter(s)}
             style={{
-              background: filter === s ? 'rgba(16, 185, 129, 0.2)' : 'rgba(255, 255, 255, 0.04)',
-              color: filter === s ? '#34d399' : 'var(--text-muted)',
-              border: filter === s ? '1px solid rgba(16, 185, 129, 0.4)' : '1px solid var(--border-subtle)',
-              padding: '6px 16px',
+              background: filter === s ? '#d1fae5' : '#ffffff',
+              color: filter === s ? '#047857' : 'var(--text-muted)',
+              border: filter === s ? '1px solid #10b981' : '1px solid var(--border-subtle)',
+              padding: '7px 16px',
               borderRadius: '9999px',
               fontWeight: 700,
               fontSize: '0.8rem',
               cursor: 'pointer',
               whiteSpace: 'nowrap',
+              boxShadow: filter === s ? '0 2px 8px rgba(16, 185, 129, 0.12)' : 'none',
               transition: 'all 0.15s'
             }}
           >
             {s === 'ALL' ? 'ALL REQUESTS' : s}
-            <span style={{ marginLeft: '6px', opacity: 0.7 }}>
+            <span style={{ marginLeft: '6px', opacity: 0.75 }}>
               ({s === 'ALL' ? requests.length : requests.filter(r => r.status === s).length})
             </span>
           </button>
@@ -163,9 +164,9 @@ export default function RequestTracker({ currentUser, onOpenScheduleModal, onNot
           Loading collection records...
         </div>
       ) : filtered.length === 0 ? (
-        <div className="glass-panel" style={{ textAlign: 'center', padding: '60px 20px' }}>
+        <div className="glass-panel" style={{ textAlign: 'center', padding: '60px 20px', background: '#ffffff' }}>
           <Clock size={40} color="var(--text-dim)" style={{ marginBottom: '12px' }} />
-          <h3 style={{ fontSize: '1.2rem', marginBottom: '6px' }}>No matching requests found</h3>
+          <h3 style={{ fontSize: '1.2rem', marginBottom: '6px', color: '#132a20' }}>No matching requests found</h3>
           <p style={{ color: 'var(--text-dim)', fontSize: '0.9rem' }}>
             {search ? 'Try adjusting your search criteria.' : 'Submit your first e-waste item for collection to see it here!'}
           </p>
@@ -182,7 +183,8 @@ export default function RequestTracker({ currentUser, onOpenScheduleModal, onNot
                 className="glass-panel"
                 style={{
                   padding: '28px',
-                  border: req.status === 'RECYCLED' ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid var(--border-subtle)'
+                  background: '#ffffff',
+                  border: req.status === 'RECYCLED' ? '1px solid #a7f3d0' : '1px solid var(--border-subtle)'
                 }}
               >
                 {/* Top Info Bar */}
@@ -197,7 +199,7 @@ export default function RequestTracker({ currentUser, onOpenScheduleModal, onNot
                   paddingBottom: '14px'
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <span style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--primary-light)', letterSpacing: '0.02em' }}>
+                    <span style={{ fontSize: '1rem', fontWeight: 800, color: '#047857', letterSpacing: '0.02em' }}>
                       {req.id}
                     </span>
                     <span className={`badge-status badge-${req.status.toLowerCase()}`}>
@@ -214,8 +216,8 @@ export default function RequestTracker({ currentUser, onOpenScheduleModal, onNot
                       display: 'flex',
                       alignItems: 'center',
                       gap: '4px',
-                      background: 'rgba(16, 185, 129, 0.12)',
-                      color: '#34d399',
+                      background: '#d1fae5',
+                      color: '#047857',
                       padding: '4px 10px',
                       borderRadius: 'var(--radius-full)',
                       fontWeight: 700,
@@ -260,7 +262,7 @@ export default function RequestTracker({ currentUser, onOpenScheduleModal, onNot
                     <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)', textTransform: 'uppercase', fontWeight: 700 }}>
                       Device Model
                     </span>
-                    <div style={{ fontSize: '1rem', fontWeight: 600, color: '#fff', marginTop: '2px' }}>
+                    <div style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-main)', marginTop: '2px' }}>
                       {req.brandModel}
                     </div>
                     <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
@@ -272,12 +274,12 @@ export default function RequestTracker({ currentUser, onOpenScheduleModal, onNot
                     <span style={{ fontSize: '0.75rem', color: 'var(--text-dim)', textTransform: 'uppercase', fontWeight: 700 }}>
                       Weight &amp; Toxicity
                     </span>
-                    <div style={{ fontSize: '0.95rem', fontWeight: 600, color: '#fff', marginTop: '2px' }}>
+                    <div style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-main)', marginTop: '2px' }}>
                       {req.estimatedWeightKg} kg • Condition: {req.condition}
                     </div>
                     <span style={{
                       fontSize: '0.75rem',
-                      color: req.hazardLevel.includes('High') ? '#fb7185' : req.hazardLevel.includes('Medium') ? '#38bdf8' : '#34d399',
+                      color: req.hazardLevel.includes('High') ? '#e11d48' : req.hazardLevel.includes('Medium') ? '#0284c7' : '#059669',
                       fontWeight: 600
                     }}>
                       Hazard: {req.hazardLevel}
@@ -289,7 +291,7 @@ export default function RequestTracker({ currentUser, onOpenScheduleModal, onNot
                       Pickup Logistics
                     </span>
                     <div style={{ fontSize: '0.88rem', color: 'var(--text-main)', marginTop: '2px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <MapPin size={13} color="var(--primary-light)" />
+                      <MapPin size={13} color="#059669" />
                       <span>{req.pickupAddress}</span>
                     </div>
                     <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)', display: 'flex', alignItems: 'center', gap: '6px', marginTop: '2px' }}>
@@ -301,22 +303,22 @@ export default function RequestTracker({ currentUser, onOpenScheduleModal, onNot
                   {/* Pickup Agent Info if scheduled */}
                   {pickup && (
                     <div style={{
-                      background: 'rgba(139, 92, 246, 0.1)',
-                      border: '1px solid rgba(139, 92, 246, 0.25)',
+                      background: '#f3e8ff',
+                      border: '1px solid #e9d5ff',
                       borderRadius: 'var(--radius-md)',
                       padding: '10px 14px'
                     }}>
-                      <div style={{ fontSize: '0.75rem', color: '#c084fc', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <div style={{ fontSize: '0.75rem', color: '#7c3aed', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px' }}>
                         <Truck size={13} />
                         <span>DISPATCHED FLEET</span>
                       </div>
-                      <div style={{ fontSize: '0.86rem', fontWeight: 600, color: '#fff', marginTop: '2px' }}>
+                      <div style={{ fontSize: '0.86rem', fontWeight: 600, color: '#132a20', marginTop: '2px' }}>
                         {pickup.agentName}
                       </div>
                       <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)' }}>
                         Slot: {pickup.timeSlot}
                       </div>
-                      <div style={{ fontSize: '0.78rem', color: '#34d399', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <div style={{ fontSize: '0.78rem', color: '#047857', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
                         <KeyRound size={12} />
                         <span>Verification OTP: <strong>{pickup.confirmationOtp}</strong></span>
                       </div>
@@ -335,7 +337,6 @@ export default function RequestTracker({ currentUser, onOpenScheduleModal, onNot
                   }}>
                     {TIMELINE_STEPS.map((step, idx) => {
                       const isComplete = idx <= currentStepIdx && req.status !== 'REJECTED';
-                      const isCurrent = idx === currentStepIdx && req.status !== 'REJECTED';
 
                       return (
                         <div key={step.key} style={{ textAlign: 'center' }}>
@@ -343,22 +344,21 @@ export default function RequestTracker({ currentUser, onOpenScheduleModal, onNot
                             height: '6px',
                             borderRadius: '3px',
                             background: isComplete 
-                              ? 'linear-gradient(90deg, #10b981 0%, #059669 100%)' 
-                              : 'rgba(255, 255, 255, 0.08)',
+                              ? 'linear-gradient(90deg, #34d399 0%, #059669 100%)' 
+                              : '#e2ece5',
                             marginBottom: '8px',
-                            boxShadow: isComplete ? '0 0 8px rgba(16, 185, 129, 0.4)' : 'none',
                             transition: 'all 0.3s'
                           }} />
                           <div style={{
                             fontSize: '0.74rem',
                             fontWeight: 700,
-                            color: isComplete ? '#fff' : 'var(--text-dim)',
+                            color: isComplete ? '#047857' : 'var(--text-dim)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             gap: '4px'
                           }}>
-                            {isComplete && <CheckCircle2 size={12} color="#34d399" />}
+                            {isComplete && <CheckCircle2 size={12} color="#059669" />}
                             <span>{step.label}</span>
                           </div>
                           <div style={{ fontSize: '0.68rem', color: 'var(--text-dim)' }}>
@@ -374,8 +374,8 @@ export default function RequestTracker({ currentUser, onOpenScheduleModal, onNot
                 {req.status === 'APPROVED' && !pickup && (
                   <div style={{
                     marginTop: '16px',
-                    background: 'rgba(6, 182, 212, 0.1)',
-                    border: '1px solid rgba(6, 182, 212, 0.3)',
+                    background: '#ecfdf5',
+                    border: '1px solid #a7f3d0',
                     padding: '12px 18px',
                     borderRadius: 'var(--radius-md)',
                     display: 'flex',
@@ -384,7 +384,7 @@ export default function RequestTracker({ currentUser, onOpenScheduleModal, onNot
                     flexWrap: 'wrap',
                     gap: '10px'
                   }}>
-                    <div style={{ fontSize: '0.85rem', color: '#e0f2fe' }}>
+                    <div style={{ fontSize: '0.85rem', color: '#047857' }}>
                       ✅ Environmental clearance granted. Schedule a pickup driver to finalize collection time.
                     </div>
                     <button
@@ -412,8 +412,8 @@ export default function RequestTracker({ currentUser, onOpenScheduleModal, onNot
                 width: '56px',
                 height: '56px',
                 borderRadius: '50%',
-                background: 'rgba(16, 185, 129, 0.15)',
-                color: '#34d399',
+                background: '#d1fae5',
+                color: '#047857',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -421,36 +421,36 @@ export default function RequestTracker({ currentUser, onOpenScheduleModal, onNot
               }}>
                 <ShieldCheck size={32} />
               </div>
-              <h2 style={{ fontSize: '1.4rem', margin: 0 }}>Certified E-Waste Recycling Certificate</h2>
+              <h2 style={{ fontSize: '1.4rem', margin: 0, color: '#132a20' }}>Certified E-Waste Recycling Certificate</h2>
               <p style={{ fontSize: '0.8rem', color: 'var(--text-dim)', margin: '4px 0 0' }}>
                 Zero-Landfill Diversion &amp; Hazardous Material Isolation Guarantee
               </p>
             </div>
 
             <div style={{ padding: '20px 0', fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: 1.8 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.05)', padding: '6px 0' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f3', padding: '6px 0' }}>
                 <span>Certificate Serial:</span>
-                <strong style={{ color: '#fff' }}>ECD-{selectedReceipt.id}-R2X</strong>
+                <strong style={{ color: '#132a20' }}>ECD-{selectedReceipt.id}-R2X</strong>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.05)', padding: '6px 0' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f3', padding: '6px 0' }}>
                 <span>Donor Citizen:</span>
-                <strong style={{ color: '#fff' }}>{selectedReceipt.userName}</strong>
+                <strong style={{ color: '#132a20' }}>{selectedReceipt.userName}</strong>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.05)', padding: '6px 0' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f3', padding: '6px 0' }}>
                 <span>Item Processed:</span>
-                <strong style={{ color: '#fff' }}>{selectedReceipt.brandModel} ({selectedReceipt.quantity} unit)</strong>
+                <strong style={{ color: '#132a20' }}>{selectedReceipt.brandModel} ({selectedReceipt.quantity} unit)</strong>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.05)', padding: '6px 0' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f3', padding: '6px 0' }}>
                 <span>Total Scrap Diverted:</span>
-                <strong style={{ color: 'var(--primary-light)' }}>{selectedReceipt.estimatedWeightKg} KG</strong>
+                <strong style={{ color: '#047857' }}>{selectedReceipt.estimatedWeightKg} KG</strong>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.05)', padding: '6px 0' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f1f5f3', padding: '6px 0' }}>
                 <span>CO₂ Avoided:</span>
-                <strong style={{ color: '#38bdf8' }}>~{Math.round(selectedReceipt.estimatedWeightKg * 1.82 * 10) / 10} KG</strong>
+                <strong style={{ color: '#0284c7' }}>~{Math.round(selectedReceipt.estimatedWeightKg * 1.82 * 10) / 10} KG</strong>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0' }}>
                 <span>EcoPoints Credited:</span>
-                <strong style={{ color: '#c084fc' }}>+{selectedReceipt.rewardPoints} Points</strong>
+                <strong style={{ color: '#7c3aed' }}>+{selectedReceipt.rewardPoints} Points</strong>
               </div>
             </div>
 

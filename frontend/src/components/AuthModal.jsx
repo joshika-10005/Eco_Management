@@ -59,7 +59,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess, onNotificat
         {/* Header */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
           <div>
-            <h2 style={{ fontSize: '1.4rem', margin: 0 }}>
+            <h2 style={{ fontSize: '1.4rem', margin: 0, color: '#132a20' }}>
               {tab === 'login' ? 'Access EcoDrop Network' : 'Create Citizen Profile'}
             </h2>
             <p style={{ fontSize: '0.8rem', color: 'var(--text-dim)', margin: '4px 0 0' }}>
@@ -70,7 +70,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess, onNotificat
           <button 
             onClick={onClose}
             style={{
-              background: 'rgba(255, 255, 255, 0.05)',
+              background: '#f1f5f3',
               border: 'none',
               color: 'var(--text-muted)',
               cursor: 'pointer',
@@ -84,8 +84,8 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess, onNotificat
 
         {/* 1-Click Demo Personas */}
         <div style={{
-          background: 'rgba(255, 255, 255, 0.03)',
-          border: '1px solid var(--border-subtle)',
+          background: '#f9fcf9',
+          border: '1px solid #e2ece5',
           borderRadius: 'var(--radius-md)',
           padding: '14px',
           marginBottom: '20px'
@@ -94,68 +94,68 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess, onNotificat
             ⚡ Instant 1-Click Demo Login
           </p>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <button
               type="button"
               onClick={() => handleQuickLogin('citizen@ecodrop.org')}
               style={{
-                background: 'rgba(16, 185, 129, 0.1)',
-                border: '1px solid rgba(16, 185, 129, 0.25)',
-                color: '#34d399',
-                padding: '8px 12px',
+                background: '#ecfdf5',
+                border: '1px solid #a7f3d0',
+                color: '#047857',
+                padding: '9px 14px',
                 borderRadius: 'var(--radius-sm)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 cursor: 'pointer',
-                fontSize: '0.84rem',
+                fontSize: '0.86rem',
                 fontWeight: 600
               }}
             >
               <span>🌱 Alex Rivera (Citizen Donor)</span>
-              <span style={{ fontSize: '0.72rem', opacity: 0.8 }}>Login &rarr;</span>
+              <span style={{ fontSize: '0.75rem', opacity: 0.85 }}>Login &rarr;</span>
             </button>
 
             <button
               type="button"
               onClick={() => handleQuickLogin('recycler@ecodrop.org')}
               style={{
-                background: 'rgba(59, 130, 246, 0.1)',
-                border: '1px solid rgba(59, 130, 246, 0.25)',
-                color: '#60a5fa',
-                padding: '8px 12px',
+                background: '#eff6ff',
+                border: '1px solid #bfdbfe',
+                color: '#1d4ed8',
+                padding: '9px 14px',
                 borderRadius: 'var(--radius-sm)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 cursor: 'pointer',
-                fontSize: '0.84rem',
+                fontSize: '0.86rem',
                 fontWeight: 600
               }}
             >
               <span>🚚 Marcus Reed (Logistics Driver)</span>
-              <span style={{ fontSize: '0.72rem', opacity: 0.8 }}>Login &rarr;</span>
+              <span style={{ fontSize: '0.75rem', opacity: 0.85 }}>Login &rarr;</span>
             </button>
 
             <button
               type="button"
               onClick={() => handleQuickLogin('admin@ecodrop.org')}
               style={{
-                background: 'rgba(244, 63, 94, 0.1)',
-                border: '1px solid rgba(244, 63, 94, 0.25)',
-                color: '#fb7185',
-                padding: '8px 12px',
+                background: '#fff1f2',
+                border: '1px solid #fecdd3',
+                color: '#be123c',
+                padding: '9px 14px',
                 borderRadius: 'var(--radius-sm)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 cursor: 'pointer',
-                fontSize: '0.84rem',
+                fontSize: '0.86rem',
                 fontWeight: 600
               }}
             >
               <span>🛡️ Dr. Elena Vance (System Admin)</span>
-              <span style={{ fontSize: '0.72rem', opacity: 0.8 }}>Login &rarr;</span>
+              <span style={{ fontSize: '0.75rem', opacity: 0.85 }}>Login &rarr;</span>
             </button>
           </div>
         </div>
@@ -173,8 +173,8 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess, onNotificat
               flex: 1,
               background: 'transparent',
               border: 'none',
-              borderBottom: tab === 'login' ? '2px solid var(--primary)' : '2px solid transparent',
-              color: tab === 'login' ? '#fff' : 'var(--text-dim)',
+              borderBottom: tab === 'login' ? '2px solid #10b981' : '2px solid transparent',
+              color: tab === 'login' ? '#047857' : 'var(--text-dim)',
               fontWeight: 700,
               padding: '10px',
               cursor: 'pointer',
@@ -190,8 +190,8 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess, onNotificat
               flex: 1,
               background: 'transparent',
               border: 'none',
-              borderBottom: tab === 'register' ? '2px solid var(--primary)' : '2px solid transparent',
-              color: tab === 'register' ? '#fff' : 'var(--text-dim)',
+              borderBottom: tab === 'register' ? '2px solid #10b981' : '2px solid transparent',
+              color: tab === 'register' ? '#047857' : 'var(--text-dim)',
               fontWeight: 700,
               padding: '10px',
               cursor: 'pointer',

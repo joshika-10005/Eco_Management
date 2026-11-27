@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
   Recycle, 
-  Sparkles, 
+  Search,
   PlusCircle, 
   ListOrdered, 
   Truck, 
@@ -9,9 +9,9 @@ import {
   UserCircle2, 
   LogOut, 
   ChevronDown, 
-  ShieldCheck, 
   Award,
-  Layers
+  Leaf,
+  ShoppingBag
 } from 'lucide-react';
 import { storageService } from '../services/storageService';
 
@@ -41,303 +41,309 @@ export default function Navbar({
   const getRoleBadge = (role) => {
     switch (role) {
       case 'ADMIN':
-        return <span style={{ background: 'rgba(244, 63, 94, 0.2)', color: '#fb7185', padding: '2px 8px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 700 }}>ADMIN</span>;
+        return <span style={{ background: '#fee2e2', color: '#b91c1c', padding: '2px 8px', borderRadius: '9999px', fontSize: '0.68rem', fontWeight: 700 }}>ADMIN</span>;
       case 'RECYCLER':
-        return <span style={{ background: 'rgba(59, 130, 246, 0.2)', color: '#60a5fa', padding: '2px 8px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 700 }}>LOGISTICS</span>;
+        return <span style={{ background: '#e0f2fe', color: '#0369a1', padding: '2px 8px', borderRadius: '9999px', fontSize: '0.68rem', fontWeight: 700 }}>LOGISTICS</span>;
       default:
-        return <span style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#34d399', padding: '2px 8px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 700 }}>CITIZEN</span>;
+        return <span style={{ background: '#dcf0e2', color: '#25523b', padding: '2px 8px', borderRadius: '9999px', fontSize: '0.68rem', fontWeight: 700 }}>CITIZEN</span>;
     }
   };
 
   return (
     <header style={{
-      background: 'rgba(11, 22, 29, 0.85)',
-      backdropFilter: 'blur(16px)',
-      borderBottom: '1px solid var(--border-subtle)',
-      position: 'sticky',
-      top: 0,
-      zIndex: 90
+      padding: '24px 36px 18px',
+      background: 'transparent',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: '20px'
     }}>
-      <div style={{
-        maxWidth: '1280px',
-        margin: '0 auto',
-        padding: '12px 24px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        gap: '20px'
-      }}>
-        {/* Brand */}
-        <div 
+      {/* Brand Logo - Inspired by Poulls Organic Forest Green Typography */}
+      <div 
+        onClick={() => setActiveTab('home')}
+        style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
+      >
+        <span style={{
+          fontSize: '1.8rem',
+          fontWeight: 800,
+          letterSpacing: '-0.03em',
+          color: 'var(--forest-green)',
+          fontFamily: 'var(--font-heading)'
+        }}>
+          EcoDrop
+        </span>
+      </div>
+
+      {/* Center Nav Links: Home, Recycle, Tracker, Logistics, Council */}
+      <nav style={{ display: 'flex', alignItems: 'center', gap: '30px' }}>
+        <button
           onClick={() => setActiveTab('home')}
-          style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }}
+          style={{
+            background: 'transparent',
+            border: 'none',
+            color: activeTab === 'home' ? 'var(--forest-green)' : 'var(--text-muted)',
+            fontWeight: activeTab === 'home' ? 700 : 500,
+            fontSize: '0.94rem',
+            cursor: 'pointer',
+            padding: '4px 0',
+            borderBottom: activeTab === 'home' ? '2px solid var(--forest-green)' : '2px solid transparent',
+            transition: 'var(--transition)'
+          }}
         >
-          <div style={{
-            width: '42px',
-            height: '42px',
-            borderRadius: '12px',
-            background: 'linear-gradient(135deg, #10b981 0%, #06b6d4 100%)',
+          Home
+        </button>
+
+        <button
+          onClick={onOpenSubmitModal}
+          style={{
+            background: 'transparent',
+            border: 'none',
+            color: 'var(--text-muted)',
+            fontWeight: 500,
+            fontSize: '0.94rem',
+            cursor: 'pointer',
+            padding: '4px 0',
+            transition: 'var(--transition)'
+          }}
+        >
+          Recycle
+        </button>
+
+        <button
+          onClick={() => setActiveTab('tracker')}
+          style={{
+            background: 'transparent',
+            border: 'none',
+            color: activeTab === 'tracker' ? 'var(--forest-green)' : 'var(--text-muted)',
+            fontWeight: activeTab === 'tracker' ? 700 : 500,
+            fontSize: '0.94rem',
+            cursor: 'pointer',
+            padding: '4px 0',
+            borderBottom: activeTab === 'tracker' ? '2px solid var(--forest-green)' : '2px solid transparent',
+            transition: 'var(--transition)'
+          }}
+        >
+          Tracker
+        </button>
+
+        <button
+          onClick={() => setActiveTab('pickups')}
+          style={{
+            background: 'transparent',
+            border: 'none',
+            color: activeTab === 'pickups' ? 'var(--forest-green)' : 'var(--text-muted)',
+            fontWeight: activeTab === 'pickups' ? 700 : 500,
+            fontSize: '0.94rem',
+            cursor: 'pointer',
+            padding: '4px 0',
+            borderBottom: activeTab === 'pickups' ? '2px solid var(--forest-green)' : '2px solid transparent',
+            transition: 'var(--transition)'
+          }}
+        >
+          Logistics
+        </button>
+
+        <button
+          onClick={() => setActiveTab('admin')}
+          style={{
+            background: 'transparent',
+            border: 'none',
+            color: activeTab === 'admin' ? 'var(--forest-green)' : 'var(--text-muted)',
+            fontWeight: activeTab === 'admin' ? 700 : 500,
+            fontSize: '0.94rem',
+            cursor: 'pointer',
+            padding: '4px 0',
+            borderBottom: activeTab === 'admin' ? '2px solid var(--forest-green)' : '2px solid transparent',
+            transition: 'var(--transition)'
+          }}
+        >
+          Council
+        </button>
+      </nav>
+
+      {/* Right Action Icons matching reference (Search icon + Forest Green Pill Button) */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+        {/* Search icon button */}
+        <button
+          onClick={() => setActiveTab('tracker')}
+          title="Search requests"
+          style={{
+            width: '38px',
+            height: '38px',
+            borderRadius: '50%',
+            background: '#ffffff',
+            border: '1px solid var(--border-subtle)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 0 20px rgba(16, 185, 129, 0.4)'
-          }}>
-            <Recycle size={24} color="#ffffff" style={{ animation: 'spin-slow 20s linear infinite' }} />
-          </div>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ fontSize: '1.25rem', fontWeight: 800, letterSpacing: '-0.02em', color: '#fff' }}>
-                EcoDrop<span style={{ color: 'var(--primary)' }}>.ai</span>
-              </span>
-              <span style={{
-                background: 'rgba(16, 185, 129, 0.15)',
-                color: '#34d399',
-                fontSize: '0.68rem',
+            cursor: 'pointer',
+            color: 'var(--text-muted)',
+            boxShadow: '0 2px 6px rgba(0, 0, 0, 0.04)',
+            transition: 'var(--transition)'
+          }}
+        >
+          <Search size={16} />
+        </button>
+
+        {/* Forest Green Pill Button */}
+        <button
+          onClick={onOpenSubmitModal}
+          className="btn-forest-pill"
+          style={{ padding: '10px 22px', fontSize: '0.88rem' }}
+        >
+          <Leaf size={14} />
+          <span>Get Pickup</span>
+        </button>
+
+        {/* User Persona Profile Pill */}
+        {currentUser ? (
+          <div style={{ position: 'relative' }}>
+            <div 
+              onClick={() => setShowPersonaMenu(!showPersonaMenu)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                background: '#ffffff',
+                border: '1px solid var(--border-subtle)',
+                padding: '5px 12px',
+                borderRadius: 'var(--radius-pill)',
+                cursor: 'pointer',
+                boxShadow: '0 2px 6px rgba(0, 0, 0, 0.03)',
+                transition: 'var(--transition)'
+              }}
+            >
+              <div style={{
+                background: 'var(--forest-green-subtle)',
+                color: 'var(--forest-green)',
                 fontWeight: 700,
-                padding: '1px 6px',
-                borderRadius: '4px',
-                border: '1px solid rgba(16, 185, 129, 0.3)'
+                fontSize: '0.78rem',
+                padding: '2px 8px',
+                borderRadius: 'var(--radius-pill)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px'
               }}>
-                v2.4
-              </span>
-            </div>
-            <p style={{ fontSize: '0.72rem', color: 'var(--text-dim)', fontWeight: 500, margin: 0 }}>
-              Smart E-Waste Recycling Hub
-            </p>
-          </div>
-        </div>
-
-        {/* Navigation Tabs */}
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <button
-            onClick={() => setActiveTab('home')}
-            style={{
-              background: activeTab === 'home' ? 'rgba(255, 255, 255, 0.08)' : 'transparent',
-              color: activeTab === 'home' ? 'var(--primary-light)' : 'var(--text-muted)',
-              border: activeTab === 'home' ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid transparent',
-              padding: '8px 16px',
-              borderRadius: 'var(--radius-md)',
-              fontWeight: 600,
-              fontSize: '0.9rem',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              transition: 'all 0.2s'
-            }}
-          >
-            <Sparkles size={16} />
-            <span>Impact Hub</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('tracker')}
-            style={{
-              background: activeTab === 'tracker' ? 'rgba(255, 255, 255, 0.08)' : 'transparent',
-              color: activeTab === 'tracker' ? 'var(--primary-light)' : 'var(--text-muted)',
-              border: activeTab === 'tracker' ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid transparent',
-              padding: '8px 16px',
-              borderRadius: 'var(--radius-md)',
-              fontWeight: 600,
-              fontSize: '0.9rem',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              transition: 'all 0.2s'
-            }}
-          >
-            <ListOrdered size={16} />
-            <span>Live Tracker</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('pickups')}
-            style={{
-              background: activeTab === 'pickups' ? 'rgba(255, 255, 255, 0.08)' : 'transparent',
-              color: activeTab === 'pickups' ? 'var(--primary-light)' : 'var(--text-muted)',
-              border: activeTab === 'pickups' ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid transparent',
-              padding: '8px 16px',
-              borderRadius: 'var(--radius-md)',
-              fontWeight: 600,
-              fontSize: '0.9rem',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              transition: 'all 0.2s'
-            }}
-          >
-            <Truck size={16} />
-            <span>Pickups & Fleet</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('admin')}
-            style={{
-              background: activeTab === 'admin' ? 'rgba(255, 255, 255, 0.08)' : 'transparent',
-              color: activeTab === 'admin' ? 'var(--primary-light)' : 'var(--text-muted)',
-              border: activeTab === 'admin' ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid transparent',
-              padding: '8px 16px',
-              borderRadius: 'var(--radius-md)',
-              fontWeight: 600,
-              fontSize: '0.9rem',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              transition: 'all 0.2s'
-            }}
-          >
-            <BarChart3 size={16} />
-            <span>Admin Intelligence</span>
-          </button>
-        </nav>
-
-        {/* Right side CTA & User */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-          {/* Submit Request Button */}
-          <button
-            onClick={onOpenSubmitModal}
-            className="btn-primary"
-            style={{ padding: '8px 18px', fontSize: '0.88rem' }}
-          >
-            <PlusCircle size={17} />
-            <span>Submit E-Waste</span>
-          </button>
-
-          {/* User Persona & Points */}
-          {currentUser ? (
-            <div style={{ position: 'relative' }}>
-              <div 
-                onClick={() => setShowPersonaMenu(!showPersonaMenu)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid var(--border-subtle)',
-                  padding: '5px 12px',
-                  borderRadius: 'var(--radius-full)',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s'
-                }}
-              >
-                {/* Eco points badge */}
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px',
-                  color: '#34d399',
-                  fontWeight: 700,
-                  fontSize: '0.82rem',
-                  background: 'rgba(16, 185, 129, 0.15)',
-                  padding: '2px 8px',
-                  borderRadius: '9999px',
-                  border: '1px solid rgba(16, 185, 129, 0.25)'
-                }}>
-                  <Award size={13} />
-                  <span>{currentUser.ecoPoints || 0} pts</span>
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#fff' }}>
-                    {currentUser.fullName?.split(' ')[0]}
-                  </span>
-                  {getRoleBadge(currentUser.role)}
-                  <ChevronDown size={14} color="var(--text-muted)" />
-                </div>
+                <Award size={12} />
+                <span>{currentUser.ecoPoints || 0} pts</span>
               </div>
 
-              {/* Persona Switcher Dropdown */}
-              {showPersonaMenu && (
-                <div style={{
-                  position: 'absolute',
-                  right: 0,
-                  top: '120%',
-                  width: '270px',
-                  background: '#0e1a22',
-                  border: '1px solid var(--border-subtle)',
-                  borderRadius: 'var(--radius-lg)',
-                  boxShadow: 'var(--shadow-lg)',
-                  padding: '8px',
-                  zIndex: 200,
-                  animation: 'fadeIn 0.15s ease-out'
-                }}>
-                  <div style={{ padding: '8px 12px', borderBottom: '1px solid var(--border-subtle)' }}>
-                    <p style={{ fontSize: '0.72rem', color: 'var(--text-dim)', fontWeight: 700, textTransform: 'uppercase' }}>
-                      Quick Switch Persona
-                    </p>
-                    <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', margin: 0 }}>
-                      Logged in as <strong>{currentUser.email}</strong>
-                    </p>
-                  </div>
+              <span style={{ fontSize: '0.84rem', fontWeight: 600, color: 'var(--text-main)' }}>
+                {currentUser.fullName?.split(' ')[0]}
+              </span>
+              {getRoleBadge(currentUser.role)}
+              <ChevronDown size={13} color="var(--text-dim)" />
+            </div>
 
-                  <div style={{ padding: '4px 0' }}>
-                    {users.map((u) => (
-                      <button
-                        key={u.id}
-                        onClick={() => handleSwitchPersona(u)}
-                        style={{
-                          width: '100%',
-                          textAlign: 'left',
-                          background: u.id === currentUser.id ? 'rgba(16, 185, 129, 0.12)' : 'transparent',
-                          border: 'none',
-                          padding: '8px 12px',
-                          borderRadius: 'var(--radius-sm)',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          cursor: 'pointer',
-                          color: '#fff',
-                          fontSize: '0.84rem'
-                        }}
-                      >
-                        <div>
-                          <div style={{ fontWeight: 600 }}>{u.fullName}</div>
-                          <div style={{ fontSize: '0.74rem', color: 'var(--text-dim)' }}>{u.email}</div>
-                        </div>
-                        {getRoleBadge(u.role)}
-                      </button>
-                    ))}
-                  </div>
+            {showPersonaMenu && (
+              <div style={{
+                position: 'absolute',
+                right: 0,
+                top: '120%',
+                width: '260px',
+                background: '#ffffff',
+                border: '1px solid var(--border-subtle)',
+                borderRadius: 'var(--radius-lg)',
+                boxShadow: 'var(--shadow-container)',
+                padding: '8px',
+                zIndex: 200,
+                animation: 'fadeIn 0.15s ease-out'
+              }}>
+                <div style={{ padding: '8px 12px', borderBottom: '1px solid var(--border-subtle)' }}>
+                  <p style={{ fontSize: '0.72rem', color: 'var(--text-dim)', fontWeight: 700, textTransform: 'uppercase', margin: 0 }}>
+                    Switch Persona
+                  </p>
+                  <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: '2px 0 0' }}>
+                    {currentUser.email}
+                  </p>
+                </div>
 
-                  <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '4px' }}>
+                <div style={{ padding: '4px 0' }}>
+                  {users.map((u) => (
                     <button
-                      onClick={handleLogout}
+                      key={u.id}
+                      onClick={() => handleSwitchPersona(u)}
                       style={{
                         width: '100%',
                         textAlign: 'left',
-                        background: 'transparent',
+                        background: u.id === currentUser.id ? 'var(--forest-green-subtle)' : 'transparent',
                         border: 'none',
                         padding: '8px 12px',
                         borderRadius: 'var(--radius-sm)',
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '8px',
-                        color: '#fb7185',
+                        justifyContent: 'space-between',
                         cursor: 'pointer',
+                        color: 'var(--text-main)',
                         fontSize: '0.84rem'
                       }}
                     >
-                      <LogOut size={14} />
-                      <span>Sign Out</span>
+                      <div>
+                        <div style={{ fontWeight: 600 }}>{u.fullName}</div>
+                        <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)' }}>{u.email}</div>
+                      </div>
+                      {getRoleBadge(u.role)}
                     </button>
-                  </div>
+                  ))}
                 </div>
-              )}
-            </div>
-          ) : (
-            <button
-              onClick={onOpenAuthModal}
-              className="btn-secondary"
-              style={{ padding: '8px 16px', fontSize: '0.86rem' }}
-            >
-              <UserCircle2 size={16} />
-              <span>Sign In / Demo</span>
-            </button>
-          )}
-        </div>
+
+                <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '4px', display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                  <button
+                    onClick={() => { setShowPersonaMenu(false); onOpenAuthModal(); }}
+                    style={{
+                      width: '100%',
+                      textAlign: 'left',
+                      background: 'transparent',
+                      border: 'none',
+                      padding: '8px 12px',
+                      borderRadius: 'var(--radius-sm)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      color: 'var(--forest-green)',
+                      cursor: 'pointer',
+                      fontSize: '0.84rem',
+                      fontWeight: 600
+                    }}
+                  >
+                    <UserCircle2 size={14} />
+                    <span>Login or Register New</span>
+                  </button>
+
+                  <button
+                    onClick={handleLogout}
+                    style={{
+                      width: '100%',
+                      textAlign: 'left',
+                      background: 'transparent',
+                      border: 'none',
+                      padding: '8px 12px',
+                      borderRadius: 'var(--radius-sm)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      color: '#b91c1c',
+                      cursor: 'pointer',
+                      fontSize: '0.84rem'
+                    }}
+                  >
+                    <LogOut size={14} />
+                    <span>Sign Out</span>
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <button
+            onClick={onOpenAuthModal}
+            className="btn-secondary-pill"
+            style={{ padding: '7px 16px', fontSize: '0.84rem' }}
+          >
+            <UserCircle2 size={15} />
+            <span>Sign In</span>
+          </button>
+        )}
       </div>
     </header>
   );

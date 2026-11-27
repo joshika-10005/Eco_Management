@@ -7,12 +7,10 @@ import {
   Clock, 
   Download, 
   RotateCcw, 
-  Database, 
   ShieldCheck, 
   AlertTriangle,
   ArrowUpRight,
-  Filter,
-  FileSpreadsheet
+  Filter
 } from 'lucide-react';
 import { dataService } from '../services/dataService';
 import { storageService } from '../services/storageService';
@@ -73,16 +71,16 @@ export default function AdminPanel({ onNotification }) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `ecodrop_mongodb_collections_export_${Date.now()}.json`;
+    a.download = `ecodrop_collections_export_${Date.now()}.json`;
     a.click();
     URL.revokeObjectURL(url);
-    onNotification?.('success', 'MongoDB collections exported to JSON!');
+    onNotification?.('success', 'Collection records exported to JSON!');
   };
 
   const filteredRequests = requests.filter(r => filter === 'ALL' || r.status === filter);
 
   return (
-    <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '32px 24px 64px' }}>
+    <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '36px 24px 64px' }}>
       {/* Header */}
       <div style={{
         display: 'flex',
@@ -93,8 +91,8 @@ export default function AdminPanel({ onNotification }) {
         marginBottom: '28px'
       }}>
         <div>
-          <h1 style={{ fontSize: '2rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <BarChart3 color="var(--primary-light)" size={28} />
+          <h1 style={{ fontSize: '2rem', display: 'flex', alignItems: 'center', gap: '10px', color: '#132a20' }}>
+            <BarChart3 color="#059669" size={28} />
             <span>Admin Intelligence &amp; Control</span>
           </h1>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: 0 }}>
@@ -116,7 +114,7 @@ export default function AdminPanel({ onNotification }) {
           <button
             onClick={handleResetData}
             className="btn-secondary"
-            style={{ padding: '8px 16px', fontSize: '0.84rem', color: '#fb7185' }}
+            style={{ padding: '8px 16px', fontSize: '0.84rem', color: '#be123c' }}
           >
             <RotateCcw size={15} />
             <span>Reset Demo Seed</span>
@@ -124,7 +122,7 @@ export default function AdminPanel({ onNotification }) {
         </div>
       </div>
 
-      {/* KPI Cards Grid */}
+      {/* KPI Cards Grid in Clean Pastel White */}
       {stats && (
         <div style={{
           display: 'grid',
@@ -132,48 +130,48 @@ export default function AdminPanel({ onNotification }) {
           gap: '18px',
           marginBottom: '36px'
         }}>
-          <div className="glass-panel" style={{ padding: '20px' }}>
+          <div className="glass-panel" style={{ padding: '22px', background: '#ffffff' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-dim)', marginBottom: '8px' }}>
               <span style={{ fontSize: '0.78rem', fontWeight: 700, textTransform: 'uppercase' }}>Total Requests</span>
-              <Layers size={16} color="var(--primary-light)" />
+              <Layers size={16} color="#059669" />
             </div>
-            <div style={{ fontSize: '2rem', fontWeight: 800, color: '#fff' }}>{stats.totalRequests}</div>
-            <span style={{ fontSize: '0.78rem', color: '#34d399' }}>Logged across platform</span>
+            <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-main)' }}>{stats.totalRequests}</div>
+            <span style={{ fontSize: '0.78rem', color: '#059669', fontWeight: 600 }}>Active collection volume</span>
           </div>
 
-          <div className="glass-panel" style={{ padding: '20px' }}>
+          <div className="glass-panel" style={{ padding: '22px', background: '#ffffff' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-dim)', marginBottom: '8px' }}>
               <span style={{ fontSize: '0.78rem', fontWeight: 700, textTransform: 'uppercase' }}>Awaiting Review</span>
-              <Clock size={16} color="#fbbf24" />
+              <Clock size={16} color="#d97706" />
             </div>
-            <div style={{ fontSize: '2rem', fontWeight: 800, color: '#fbbf24' }}>{stats.pendingRequests}</div>
-            <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Require hazard check</span>
+            <div style={{ fontSize: '2rem', fontWeight: 800, color: '#d97706' }}>{stats.pendingRequests}</div>
+            <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Require hazard clearance</span>
           </div>
 
-          <div className="glass-panel" style={{ padding: '20px' }}>
+          <div className="glass-panel" style={{ padding: '22px', background: '#ffffff' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-dim)', marginBottom: '8px' }}>
               <span style={{ fontSize: '0.78rem', fontWeight: 700, textTransform: 'uppercase' }}>Scheduled Pickups</span>
-              <Users size={16} color="#c084fc" />
+              <Users size={16} color="#7c3aed" />
             </div>
-            <div style={{ fontSize: '2rem', fontWeight: 800, color: '#c084fc' }}>{stats.scheduledPickups}</div>
-            <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Fleet units assigned</span>
+            <div style={{ fontSize: '2rem', fontWeight: 800, color: '#7c3aed' }}>{stats.scheduledPickups}</div>
+            <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Fleet drivers assigned</span>
           </div>
 
-          <div className="glass-panel" style={{ padding: '20px' }}>
+          <div className="glass-panel" style={{ padding: '22px', background: '#ffffff' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-dim)', marginBottom: '8px' }}>
               <span style={{ fontSize: '0.78rem', fontWeight: 700, textTransform: 'uppercase' }}>Diverted Scrap</span>
-              <CheckCircle2 size={16} color="var(--primary-light)" />
+              <CheckCircle2 size={16} color="#059669" />
             </div>
-            <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--primary-light)' }}>
+            <div style={{ fontSize: '2rem', fontWeight: 800, color: '#047857' }}>
               {stats.kgDivertedFromLandfills} <span style={{ fontSize: '1rem', fontWeight: 500 }}>kg</span>
             </div>
-            <span style={{ fontSize: '0.78rem', color: '#38bdf8' }}>~{stats.co2AvoidedKg} kg CO₂ saved</span>
+            <span style={{ fontSize: '0.78rem', color: '#0284c7', fontWeight: 600 }}>~{stats.co2AvoidedKg} kg CO₂ saved</span>
           </div>
         </div>
       )}
 
       {/* Master Requests Table Panel */}
-      <div className="glass-panel" style={{ padding: '28px' }}>
+      <div className="glass-panel" style={{ padding: '28px', background: '#ffffff' }}>
         <div style={{
           display: 'flex',
           alignItems: 'center',
@@ -183,7 +181,7 @@ export default function AdminPanel({ onNotification }) {
           marginBottom: '20px'
         }}>
           <div>
-            <h2 style={{ fontSize: '1.3rem', margin: 0 }}>All E-Waste Collection Requests</h2>
+            <h2 style={{ fontSize: '1.3rem', margin: 0, color: '#132a20' }}>All E-Waste Collection Requests</h2>
             <p style={{ fontSize: '0.8rem', color: 'var(--text-dim)', margin: 0 }}>
               Directly transition workflow status from the dropdown
             </p>
@@ -212,7 +210,7 @@ export default function AdminPanel({ onNotification }) {
         <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.88rem' }}>
             <thead>
-              <tr style={{ borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-dim)' }}>
+              <tr style={{ borderBottom: '2px solid var(--border-subtle)', color: 'var(--text-dim)' }}>
                 <th style={{ padding: '12px 14px', fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase' }}>ID &amp; Donor</th>
                 <th style={{ padding: '12px 14px', fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase' }}>Device Item</th>
                 <th style={{ padding: '12px 14px', fontWeight: 700, fontSize: '0.75rem', textTransform: 'uppercase' }}>Weight / Hazard</th>
@@ -223,14 +221,14 @@ export default function AdminPanel({ onNotification }) {
             </thead>
             <tbody>
               {filteredRequests.map((r) => (
-                <tr key={r.id} style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.04)' }}>
+                <tr key={r.id} style={{ borderBottom: '1px solid #f1f5f3' }}>
                   <td style={{ padding: '14px' }}>
-                    <div style={{ fontWeight: 700, color: 'var(--primary-light)' }}>{r.id}</div>
+                    <div style={{ fontWeight: 700, color: '#047857' }}>{r.id}</div>
                     <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>{r.userName}</div>
                   </td>
 
                   <td style={{ padding: '14px' }}>
-                    <div style={{ fontWeight: 600, color: '#fff' }}>{r.brandModel}</div>
+                    <div style={{ fontWeight: 600, color: 'var(--text-main)' }}>{r.brandModel}</div>
                     <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)' }}>{r.deviceCategory} (Qty: {r.quantity})</div>
                   </td>
 
@@ -239,7 +237,7 @@ export default function AdminPanel({ onNotification }) {
                     <span style={{
                       fontSize: '0.72rem',
                       fontWeight: 600,
-                      color: r.hazardLevel.includes('High') ? '#fb7185' : r.hazardLevel.includes('Medium') ? '#38bdf8' : '#34d399'
+                      color: r.hazardLevel.includes('High') ? '#e11d48' : r.hazardLevel.includes('Medium') ? '#0284c7' : '#059669'
                     }}>
                       {r.hazardLevel}
                     </span>
@@ -258,7 +256,7 @@ export default function AdminPanel({ onNotification }) {
                   <td style={{ padding: '14px' }}>
                     <select
                       className="form-select"
-                      style={{ padding: '4px 10px', fontSize: '0.8rem', width: '130px' }}
+                      style={{ padding: '5px 10px', fontSize: '0.8rem', width: '135px' }}
                       value={r.status}
                       onChange={(e) => handleStatusChange(r.id, e.target.value)}
                     >
@@ -274,71 +272,6 @@ export default function AdminPanel({ onNotification }) {
               ))}
             </tbody>
           </table>
-        </div>
-      </div>
-
-      {/* MongoDB Atlas Collections Schema Reference */}
-      <div style={{ marginTop: '40px' }}>
-        <h2 style={{ fontSize: '1.4rem', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Database size={20} color="var(--primary-light)" />
-          <span>MongoDB Atlas Collection Mappings</span>
-        </h2>
-
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '20px'
-        }}>
-          <div className="glass-panel" style={{ padding: '20px' }}>
-            <h4 style={{ color: '#34d399', marginBottom: '8px' }}>Collection: <code>users</code></h4>
-            <pre style={{ fontSize: '0.75rem', color: 'var(--text-muted)', background: 'rgba(0,0,0,0.3)', padding: '12px', borderRadius: '8px', overflowX: 'auto' }}>
-{`{
-  "_id": ObjectId("..."),
-  "fullName": "Alex Rivera",
-  "email": "citizen@ecodrop.org",
-  "role": "CITIZEN", // CITIZEN, ADMIN, RECYCLER
-  "phone": "+1-555-0144",
-  "address": "Austin, TX",
-  "ecoPoints": 280,
-  "createdAt": ISODate("...")
-}`}
-            </pre>
-          </div>
-
-          <div className="glass-panel" style={{ padding: '20px' }}>
-            <h4 style={{ color: '#38bdf8', marginBottom: '8px' }}>Collection: <code>ewaste_requests</code></h4>
-            <pre style={{ fontSize: '0.75rem', color: 'var(--text-muted)', background: 'rgba(0,0,0,0.3)', padding: '12px', borderRadius: '8px', overflowX: 'auto' }}>
-{`{
-  "_id": ObjectId("..."),
-  "userId": "user-citizen",
-  "deviceCategory": "Laptops & Computers",
-  "brandModel": "ThinkPad T480",
-  "quantity": 2,
-  "estimatedWeightKg": 4.8,
-  "condition": "Damaged",
-  "hazardLevel": "Medium",
-  "status": "SCHEDULED",
-  "rewardPoints": 210,
-  "createdAt": ISODate("...")
-}`}
-            </pre>
-          </div>
-
-          <div className="glass-panel" style={{ padding: '20px' }}>
-            <h4 style={{ color: '#c084fc', marginBottom: '8px' }}>Collection: <code>pickup_details</code></h4>
-            <pre style={{ fontSize: '0.75rem', color: 'var(--text-muted)', background: 'rgba(0,0,0,0.3)', padding: '12px', borderRadius: '8px', overflowX: 'auto' }}>
-{`{
-  "_id": ObjectId("..."),
-  "requestId": "REQ-1001",
-  "scheduledDate": "2026-11-04",
-  "timeSlot": "Morning (09:00 - 12:00)",
-  "agentName": "Marcus Reed (GreenFleet #3)",
-  "vehicleNumber": "EV-RECYCLE-42",
-  "confirmationOtp": "5821",
-  "pickupStatus": "SCHEDULED"
-}`}
-            </pre>
-          </div>
         </div>
       </div>
     </div>
