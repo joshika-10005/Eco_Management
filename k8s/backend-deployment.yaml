@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ewaste-backend:1.0.0
+          image: ewaste-backend:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8081
